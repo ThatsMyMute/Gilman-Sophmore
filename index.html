@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Complete Interactive Study Guide</title>
+    <title>Enhanced Interactive Study Guide</title>
     <style>
-        /* CSS Styles */
-         body {
+        /* General Styles */
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             margin: 0;
@@ -113,7 +113,7 @@
             border-color: #c0392b;
         }
         /* Popup Styles */
-        .popup {
+        .popup, .welcome-popup {
             position: fixed;
             display: none;
             width: 80%;
@@ -135,14 +135,17 @@
         .popup.incorrect {
             border-color: #e74c3c;
         }
-        .popup h2 {
+        .welcome-popup {
+            border-color: #1abc9c;
+        }
+        .popup h2, .welcome-popup h2 {
             margin-top: 0;
             color: #2c3e50;
         }
-        .popup p {
+        .popup p, .welcome-popup p {
             color: #34495e;
         }
-        .popup button {
+        .popup button, .welcome-popup button {
             margin-top: 15px;
             padding: 10px 20px;
             cursor: pointer;
@@ -153,7 +156,7 @@
             font-size: 16px;
             transition: background-color 0.3s ease;
         }
-        .popup button:hover {
+        .popup button:hover, .welcome-popup button:hover {
             background-color: #2980b9;
         }
         /* Back to Top Link */
@@ -182,6 +185,7 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Collapsible Sections
             var coll = document.getElementsByClassName("collapsible");
             for (var i = 0; i < coll.length; i++) {
                 coll[i].addEventListener("click", function() {
@@ -194,7 +198,7 @@
                     }
                 });
             }
-
+            // Quiz Options
             var quizOptions = document.getElementsByClassName('quiz-option');
             for (var i = 0; i < quizOptions.length; i++) {
                 quizOptions[i].addEventListener('click', function() {
@@ -213,8 +217,9 @@
                     showPopup(isCorrect, selected.dataset.explanation);
                 });
             }
+            // Show Welcome Popup on Page Load
+            showWelcomePopup();
         });
-
         function showPopup(isCorrect, explanation) {
             var popup = document.getElementById('popup');
             var popupText = document.getElementById('popup-text');
@@ -225,10 +230,19 @@
             popup.style.display = 'block';
             document.body.classList.add('popup-active');
         }
-
         function closePopup() {
             var popup = document.getElementById('popup');
             popup.style.display = 'none';
+            document.body.classList.remove('popup-active');
+        }
+        function showWelcomePopup() {
+            var welcomePopup = document.getElementById('welcome-popup');
+            welcomePopup.style.display = 'block';
+            document.body.classList.add('popup-active');
+        }
+        function closeWelcomePopup() {
+            var welcomePopup = document.getElementById('welcome-popup');
+            welcomePopup.style.display = 'none';
             document.body.classList.remove('popup-active');
         }
     </script>
