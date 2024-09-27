@@ -3,20 +3,24 @@
 // Function to fetch a generated question from the server
 async function fetchGeneratedQuestion(topic) {
     try {
-        const response = await fetch('http://localhost:5000/generate-question', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ topic }),
-        });
-
-        const questionData = await response.json();
-        return questionData;
+      const response = await fetch('/api/generate-question', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ topic }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const questionData = await response.json();
+      return questionData;
     } catch (error) {
-        console.error('Error fetching generated question:', error);
+      console.error('Error fetching generated question:', error);
     }
-}
+  }
 
 // Function to generate practice problems using generated questions
 async function generatePracticeProblems() {
