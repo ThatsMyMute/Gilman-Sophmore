@@ -5,57 +5,158 @@
     <title>Complete Interactive Study Guide</title>
     <style>
         /* CSS Styles */
-        body {
-            font-family: Arial, sans-serif;
+         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
         }
         h1, h2, h3, h4 {
-            color: #2E86C1;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+        p {
+            color: #34495e;
         }
         ul, ol {
             margin-left: 20px;
+            color: #34495e;
         }
         li {
             margin-bottom: 5px;
         }
         hr {
-            margin: 20px 0;
+            margin: 30px 0;
+            border: none;
+            border-top: 1px solid #bdc3c7;
         }
+        /* Navigation Styles */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #1abc9c;
+            padding: 10px 20px;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+        nav a {
+            margin-right: 15px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        /* Collapsible Sections */
         .collapsible {
-            background-color: #f1f1f1;
-            color: #2E86C1;
+            background-color: #ecf0f1;
+            color: #2c3e50;
             cursor: pointer;
-            padding: 10px;
+            padding: 15px;
             width: 100%;
             border: none;
             text-align: left;
             outline: none;
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 5px;
+            transition: background-color 0.3s ease;
         }
         .active, .collapsible:hover {
-            background-color: #ddd;
+            background-color: #d0dfe6;
         }
         .content {
-            padding: 0 15px;
+            padding: 0 20px;
             display: none;
             overflow: hidden;
-            background-color: #f9f9f9;
+            background-color: #f7f9fa;
             margin-bottom: 10px;
+            border-left: 4px solid #1abc9c;
         }
+        /* Practice Problems Styles */
         .question {
+            background-color: #ffffff;
+            padding: 20px;
             margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .question p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #2c3e50;
         }
         .quiz-option {
             cursor: pointer;
-            margin-bottom: 5px;
-            padding: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
             border-radius: 5px;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            transition: background-color 0.3s ease;
+            border: 1px solid transparent;
         }
         .quiz-option:hover {
-            background-color: #e0e0e0;
+            background-color: #d0dfe6;
         }
+        .quiz-option.correct {
+            background-color: #2ecc71;
+            color: #ffffff;
+            border-color: #27ae60;
+        }
+        .quiz-option.incorrect {
+            background-color: #e74c3c;
+            color: #ffffff;
+            border-color: #c0392b;
+        }
+        /* Popup Styles */
+        .popup {
+            position: fixed;
+            display: none;
+            width: 80%;
+            max-width: 400px;
+            background-color: #ffffff;
+            border: 2px solid #3498db;
+            padding: 20px;
+            z-index: 200;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+            border-radius: 10px;
+        }
+        .popup.correct {
+            border-color: #2ecc71;
+        }
+        .popup.incorrect {
+            border-color: #e74c3c;
+        }
+        .popup h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .popup p {
+            color: #34495e;
+        }
+        .popup button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .popup button:hover {
+            background-color: #2980b9;
+        }
+        /* Back to Top Link */
         .back-to-top {
             display: block;
             margin-top: 20px;
@@ -63,59 +164,20 @@
         }
         .back-to-top a {
             text-decoration: none;
-            color: #2874A6;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: #f9f9f9;
-            padding: 10px;
-            width: 100%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 100;
-        }
-        nav a {
-            margin-right: 15px;
-            color: #2E86C1;
-            text-decoration: none;
+            color: #3498db;
             font-weight: bold;
         }
-        nav a:hover {
+        .back-to-top a:hover {
             text-decoration: underline;
-        }
-        .content-section {
-            margin-top: 60px;
-        }
-        /* Popup styles */
-        .popup {
-            position: fixed;
-            display: none;
-            width: 300px;
-            background-color: #fff;
-            border: 2px solid #2E86C1;
-            padding: 15px;
-            z-index: 200;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-        .popup.correct {
-            border-color: green;
-        }
-        .popup.incorrect {
-            border-color: red;
-        }
-        .popup button {
-            margin-top: 15px;
-            padding: 5px 10px;
-            cursor: pointer;
         }
         /* Disable scroll when popup is active */
         body.popup-active {
             overflow: hidden;
+        }
+        /* Content Section Margin */
+        .content-section {
+            margin-top: 70px;
+            padding: 0 20px;
         }
     </style>
     <script>
@@ -137,6 +199,16 @@
             for (var i = 0; i < quizOptions.length; i++) {
                 quizOptions[i].addEventListener('click', function() {
                     var selected = this;
+                    var parent = selected.parentElement;
+                    var options = parent.getElementsByClassName('quiz-option');
+                    for (var j = 0; j < options.length; j++) {
+                        options[j].style.pointerEvents = 'none';
+                        if (options[j].dataset.correct === "true") {
+                            options[j].classList.add('correct');
+                        } else {
+                            options[j].classList.add('incorrect');
+                        }
+                    }
                     var isCorrect = selected.dataset.correct === "true";
                     showPopup(isCorrect, selected.dataset.explanation);
                 });
