@@ -3,658 +3,471 @@
 <head>
     <meta charset="UTF-8">
     <title>Enhanced Interactive Study Guide</title>
-    <style>
-        /* General Styles */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f4f8;
-        }
-        h1, h2, h3, h4 {
-            color: #2c3e50;
-            margin-top: 20px;
-        }
-        p {
-            color: #34495e;
-        }
-        ul, ol {
-            margin-left: 20px;
-            color: #34495e;
-        }
-        li {
-            margin-bottom: 5px;
-        }
-        hr {
-            margin: 30px 0;
-            border: none;
-            border-top: 1px solid #bdc3c7;
-        }
-        /* Navigation Styles */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: #1abc9c;
-            padding: 10px 20px;
-            width: 100%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            z-index: 100;
-        }
-        nav a {
-            margin-right: 15px;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        /* Collapsible Sections */
-        .collapsible {
-            background-color: #ecf0f1;
-            color: #2c3e50;
-            cursor: pointer;
-            padding: 15px;
-            width: 100%;
-            border: none;
-            text-align: left;
-            outline: none;
-            font-size: 20px;
-            margin-bottom: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .active, .collapsible:hover {
-            background-color: #d0dfe6;
-        }
-        .content {
-            padding: 0 20px;
-            display: none;
-            overflow: hidden;
-            background-color: #f7f9fa;
-            margin-bottom: 10px;
-            border-left: 4px solid #1abc9c;
-        }
-        /* Practice Problems Styles */
-        .question {
-            background-color: #ffffff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-left: 4px solid #3498db;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .question p {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
-        .quiz-option {
-            cursor: pointer;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #ecf0f1;
-            color: #2c3e50;
-            transition: background-color 0.3s ease;
-            border: 1px solid transparent;
-        }
-        .quiz-option:hover {
-            background-color: #d0dfe6;
-        }
-        .quiz-option.correct {
-            background-color: #2ecc71;
-            color: #ffffff;
-            border-color: #27ae60;
-        }
-        .quiz-option.incorrect {
-            background-color: #e74c3c;
-            color: #ffffff;
-            border-color: #c0392b;
-        }
-        /* Popup Styles */
-        .popup {
-            position: fixed;
-            display: none;
-            width: 80%;
-            max-width: 400px;
-            background-color: #ffffff;
-            border: 2px solid #3498db;
-            padding: 20px;
-            z-index: 200;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            text-align: center;
-            border-radius: 10px;
-        }
-        .popup.correct {
-            border-color: #2ecc71;
-        }
-        .popup.incorrect {
-            border-color: #e74c3c;
-        }
-        .popup h2 {
-            margin-top: 0;
-            color: #2c3e50;
-        }
-        .popup p {
-            color: #34495e;
-        }
-        .popup button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            cursor: pointer;
-            background-color: #3498db;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-        .popup button:hover {
-            background-color: #2980b9;
-        }
-        /* Back to Top Link */
-        .back-to-top {
-            display: block;
-            margin-top: 20px;
-            text-align: right;
-        }
-        .back-to-top a {
-            text-decoration: none;
-            color: #3498db;
-            font-weight: bold;
-        }
-        .back-to-top a:hover {
-            text-decoration: underline;
-        }
-        /* Disable scroll when popup is active */
-        body.popup-active {
-            overflow: hidden;
-        }
-        /* Content Section Margin */
-        .content-section {
-            margin-top: 70px;
-            padding: 0 20px;
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Existing JavaScript code for collapsible sections
-            var coll = document.getElementsByClassName("collapsible");
-            for (var i = 0; i < coll.length; i++) {
-                coll[i].addEventListener("click", function() {
-                    this.classList.toggle("active");
-                    var content = this.nextElementSibling;
-                    if (content.style.display === "block") {
-                        content.style.display = "none";
-                    } else {
-                        content.style.display = "block";
-                    }
-                });
-            }
-
-            // Existing JavaScript code for quiz options
-            var quizOptions = document.getElementsByClassName('quiz-option');
-            for (var i = 0; i < quizOptions.length; i++) {
-                quizOptions[i].addEventListener('click', function() {
-                    var selected = this;
-                    var parent = selected.parentElement;
-                    var options = parent.getElementsByClassName('quiz-option');
-                    for (var j = 0; j < options.length; j++) {
-                        options[j].style.pointerEvents = 'none';
-                        if (options[j].dataset.correct === "true") {
-                            options[j].classList.add('correct');
-                        } else {
-                            options[j].classList.add('incorrect');
-                        }
-                    }
-                    var isCorrect = selected.dataset.correct === "true";
-                    showQuizPopup(isCorrect, selected.dataset.explanation);
-                });
-            }
-
-            // Show the welcome popup when the page loads
-            showWelcomePopup();
-        });
-
-        function showWelcomePopup() {
-            var welcomePopup = document.getElementById('welcome-popup');
-            welcomePopup.style.display = 'block';
-            document.body.classList.add('popup-active');
-        }
-
-        function closeWelcomePopup() {
-            var welcomePopup = document.getElementById('welcome-popup');
-            welcomePopup.style.display = 'none';
-            document.body.classList.remove('popup-active');
-        }
-
-        function showQuizPopup(isCorrect, explanation) {
-            var popup = document.getElementById('popup');
-            var popupText = document.getElementById('popup-text');
-            var popupExplanation = document.getElementById('popup-explanation');
-            popup.className = isCorrect ? 'popup correct' : 'popup incorrect';
-            popupText.textContent = isCorrect ? 'Correct!' : 'Incorrect.';
-            popupExplanation.textContent = explanation;
-            popup.style.display = 'block';
-            document.body.classList.add('popup-active');
-        }
-
-        function closeQuizPopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'none';
-            document.body.classList.remove('popup-active');
-        }
-    </script>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- Welcome Popup -->
     <div id="welcome-popup" class="popup">
         <h2>Welcome!</h2>
-        <p>Thank You for using my project. If you have any recommendations, please text me at (443)-243-6409 or email me at both vassarjd@gmail.com or jvassar27@students.gilman.edu !</p>
+        <p>Thank you for using this interactive study guide. We hope it helps you in your studies!</p>
         <button onclick="closeWelcomePopup()">Close</button>
     </div>
-<body>
 
-<nav>
-    <a href="#states-of-matter">States of Matter</a>
-    <a href="#physical-chemical-changes">Physical/Chemical Changes</a>
-    <a href="#classification-of-matter">Classification of Matter</a>
-    <a href="#theories-of-heat">Theories of Heat</a>
-    <a href="#element-symbols">Element Symbols</a>
-    <a href="#periodic-families">Periodic Families</a>
-    <a href="#metals-nonmetals">Metals vs Non-Metals</a>
-    <a href="#laws">Laws of Composition</a>
-    <a href="#dalton-model">Dalton's Atomic Model</a>
-    <a href="#practice-problems">Practice Problems</a>
-</nav>
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#states-of-matter">States of Matter</a>
+        <a href="#physical-chemical-changes">Physical/Chemical Changes</a>
+        <a href="#classification-of-matter">Classification of Matter</a>
+        <a href="#theories-of-heat">Theories of Heat</a>
+        <a href="#element-symbols">Element Symbols</a>
+        <a href="#periodic-families">Periodic Families</a>
+        <a href="#metals-nonmetals">Metals vs Non-Metals</a>
+        <a href="#laws">Laws of Composition</a>
+        <a href="#dalton-model">Dalton's Atomic Model</a>
+        <a href="#practice-problems">Practice Problems</a>
+    </nav>
 
-<h1 id="top">Complete Interactive Study Guide</h1>
+    <div class="content-section">
+        <h1 id="top">Complete Interactive Study Guide</h1>
 
-<hr>
+        <hr>
 
-<!-- I. States of Matter -->
-<h2 id="states-of-matter">I. States of Matter</h2>
-<button class="collapsible">A. Solids</button>
-<div class="content">
-    <ul>
-        <li><strong>Definition</strong>: Matter with a definite shape and volume.</li>
-        <li><strong>Properties</strong>:
+        <!-- I. States of Matter -->
+        <h2 id="states-of-matter">I. States of Matter</h2>
+
+        <button class="collapsible">A. Solids</button>
+        <div class="content">
             <ul>
-                <li>Particles are closely packed in a fixed arrangement.</li>
-                <li>Vibrate but do not move from place to place.</li>
-                <li>Incompressible and rigid.</li>
+                <li><strong>Definition</strong>: Matter with a definite shape and volume.</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Particles are closely packed in a fixed arrangement.</li>
+                        <li>Vibrate but do not move from place to place.</li>
+                        <li>Incompressible and rigid.</li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-</div>
+        </div>
 
-<button class="collapsible">B. Liquids</button>
-<div class="content">
-    <ul>
-        <li><strong>Definition</strong>: Matter that has a definite volume but takes the shape of its container.</li>
-        <li><strong>Properties</strong>:
+        <button class="collapsible">B. Liquids</button>
+        <div class="content">
             <ul>
-                <li>Particles are close together but can move/slide past one another.</li>
-                <li>Fluid and can flow.</li>
-                <li>Slightly compressible.</li>
+                <li><strong>Definition</strong>: Matter that has a definite volume but takes the shape of its container.</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Particles are close together but can move/slide past one another.</li>
+                        <li>Fluid and can flow.</li>
+                        <li>Slightly compressible.</li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-</div>
+        </div>
 
-<button class="collapsible">C. Gases</button>
-<div class="content">
-    <ul>
-        <li><strong>Definition</strong>: Matter without a definite shape or volume.</li>
-        <li><strong>Properties</strong>:
+        <button class="collapsible">C. Gases</button>
+        <div class="content">
             <ul>
-                <li>Particles are far apart and move freely.</li>
-                <li>Fill any container they're in.</li>
-                <li>Highly compressible.</li>
+                <li><strong>Definition</strong>: Matter without a definite shape or volume.</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Particles are far apart and move freely.</li>
+                        <li>Fill any container they're in.</li>
+                        <li>Highly compressible.</li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-</div>
+        </div>
 
-<button class="collapsible">D. Plasma</button>
-<div class="content">
-    <ul>
-        <li><strong>Definition</strong>: Ionized gas with free electrons.</li>
-        <li><strong>Properties</strong>:
+        <button class="collapsible">D. Plasma</button>
+        <div class="content">
             <ul>
-                <li>Conducts electricity.</li>
-                <li>Affected by magnetic fields.</li>
-                <li>Found in stars and fluorescent lights.</li>
+                <li><strong>Definition</strong>: Ionized gas with free electrons.</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Conducts electricity.</li>
+                        <li>Affected by magnetic fields.</li>
+                        <li>Found in stars and fluorescent lights.</li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-</div>
+        </div>
 
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
 
-<hr>
+        <hr>
 
-<!-- II. Physical and Chemical Changes -->
-<h2 id="physical-chemical-changes">II. Physical and Chemical Changes</h2>
-<button class="collapsible">A. Physical Changes</button>
-<div class="content">
-    <ul>
-        <li><strong>Definition</strong>: Changes that alter the form of a substance but not its chemical composition.</li>
-        <li><strong>Examples</strong>:
+        <!-- II. Physical and Chemical Changes -->
+        <h2 id="physical-chemical-changes">II. Physical and Chemical Changes</h2>
+
+        <button class="collapsible">A. Physical Changes</button>
+        <div class="content">
             <ul>
-                <li>Melting ice.</li>
-                <li>Tearing paper.</li>
-                <li>Dissolving sugar in water.</li>
+                <li><strong>Definition</strong>: Changes that alter the form of a substance but not its chemical composition.</li>
+                <li><strong>Examples</strong>:
+                    <ul>
+                        <li>Melting ice.</li>
+                        <li>Tearing paper.</li>
+                        <li>Dissolving sugar in water.</li>
+                    </ul>
+                </li>
+                <li><strong>Characteristics</strong>:
+                    <ul>
+                        <li>Generally reversible.</li>
+                        <li>No new substances formed.</li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-        <li><strong>Characteristics</strong>:
+        </div>
+
+        <button class="collapsible">B. Chemical Changes</button>
+        <div class="content">
             <ul>
-                <li>Generally reversible.</li>
-                <li>No new substances formed.</li>
+                <li><strong>Definition</strong>: Changes that result in the formation of new chemical substances.</li>
+                <li><strong>Examples</strong>:
+                    <ul>
+                        <li>Burning wood.</li>
+                        <li>Rusting iron.</li>
+                        <li>Baking a cake.</li>
+                    </ul>
+                </li>
+                <li><strong>Indicators</strong>:
+                    <ul>
+                        <li>Color change.</li>
+                        <li>Gas production.</li>
+                        <li>Formation of a precipitate.</li>
+                        <li>Energy change (heat, light).</li>
+                    </ul>
+                </li>
             </ul>
-        </li>
-    </ul>
-</div>
+        </div>
 
-<button class="collapsible">B. Chemical Changes</button>
-<div class="content">
-    <ul>
-        <li><strong>Definition</strong>: Changes that result in the formation of new chemical substances.</li>
-        <li><strong>Examples</strong>:
-            <ul>
-                <li>Burning wood.</li>
-                <li>Rusting iron.</li>
-                <li>Baking a cake.</li>
-            </ul>
-        </li>
-        <li><strong>Indicators</strong>:
-            <ul>
-                <li>Color change.</li>
-                <li>Gas production.</li>
-                <li>Formation of a precipitate.</li>
-                <li>Energy change (heat, light).</li>
-            </ul>
-        </li>
-    </ul>
-</div>
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
 
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
+        <hr>
 
-<hr>
+        <!-- III. Classification of Matter by Composition -->
+        <h2 id="classification-of-matter">III. Classification of Matter by Composition</h2>
 
-<!-- III. Classification of Matter by Composition -->
-<h2 id="classification-of-matter">III. Classification of Matter by Composition</h2>
-<button class="collapsible">A. Pure Substances</button>
-<div class="content">
-    <ol>
-        <li><strong>Elements</strong>
-            <ul>
-                <li>Simplest form of matter.</li>
-                <li>Cannot be broken down by chemical means.</li>
-                <li><strong>Examples</strong>: Hydrogen (H), Oxygen (O), Gold (Au).</li>
-            </ul>
-        </li>
-        <li><strong>Compounds</strong>
-            <ul>
-                <li>Made of two or more elements chemically combined.</li>
-                <li>Fixed proportions.</li>
-                <li><strong>Examples</strong>: Water (H₂O), Carbon Dioxide (CO₂).</li>
-            </ul>
-        </li>
-    </ol>
-</div>
-
-<button class="collapsible">B. Mixtures</button>
-<div class="content">
-    <ol>
-        <li><strong>Homogeneous Mixtures (Solutions)</strong>
-            <ul>
-                <li>Uniform composition throughout.</li>
-                <li><strong>Examples</strong>: Saltwater, air.</li>
-            </ul>
-        </li>
-        <li><strong>Heterogeneous Mixtures</strong>
-            <ul>
-                <li>Non-uniform composition.</li>
-                <li><strong>Examples</strong>: Salad, sand and water.</li>
-            </ul>
-        </li>
-    </ol>
-</div>
-
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
-
-<hr>
-
-<!-- IV. Theories of Heat -->
-<h2 id="theories-of-heat">IV. Theories of Heat</h2>
-<button class="collapsible">A. Caloric Theory</button>
-<div class="content">
-    <ul>
-        <li><strong>Tenets</strong>:
-            <ul>
-                <li>Heat is a weightless fluid called caloric.</li>
-                <li>Flows from hotter to colder bodies.</li>
-            </ul>
-        </li>
-        <li><strong>Experimental Support</strong>:
-            <ul>
-                <li>Early observations of heat flow.</li>
-            </ul>
-        </li>
-        <li><strong>Why It's Wrong</strong>:
-            <ul>
-                <li>Couldn't explain heat generation via friction.</li>
-                <li>Disproved by experiments showing heat as energy transfer.</li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<button class="collapsible">B. Kinetic Theory of Heat</button>
-<div class="content">
-    <ul>
-        <li><strong>Tenets</strong>:
-            <ul>
-                <li>Heat is the kinetic energy of particles.</li>
-                <li>Temperature measures average kinetic energy.</li>
-            </ul>
-        </li>
-        <li><strong>Experimental Support</strong>:
-            <ul>
-                <li>Explains gas laws and heat capacities.</li>
-            </ul>
-        </li>
-        <li><strong>Advantages</strong>:
-            <ul>
-                <li>Accounts for molecular motion.</li>
-                <li>Explains heat transfer mechanisms.</li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<button class="collapsible">C. Modern Thermodynamics</button>
-<div class="content">
-    <ul>
-        <li><strong>Tenets</strong>:
-            <ul>
-                <li>Heat is energy transfer due to temperature difference.</li>
-                <li>Governed by laws of thermodynamics.</li>
-            </ul>
-        </li>
-        <li><strong>Experimental Support</strong>:
-            <ul>
-                <li>Broad applications in engines, refrigeration.</li>
-            </ul>
-        </li>
-        <li><strong>Improvements</strong>:
-            <ul>
-                <li>Introduces concepts of entropy and enthalpy.</li>
-                <li>More comprehensive understanding of energy systems.</li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
-
-<hr>
-
-<!-- V. Element Symbols -->
-<h2 id="element-symbols">V. Element Symbols</h2>
-<div>
-    <ul>
-        <li><strong>Hydrogen</strong>: H</li>
-        <li><strong>Carbon</strong>: C</li>
-        <li><strong>Nitrogen</strong>: N</li>
-        <li><strong>Oxygen</strong>: O</li>
-        <li><strong>Sodium</strong>: Na</li>
-        <li><strong>Magnesium</strong>: Mg</li>
-        <li><strong>Aluminum</strong>: Al</li>
-        <li><strong>Silicon</strong>: Si</li>
-        <li><strong>Sulfur</strong>: S</li>
-        <li><strong>Potassium</strong>: K</li>
-        <li><strong>Calcium</strong>: Ca</li>
-        <li><strong>Iron</strong>: Fe</li>
-        <li><strong>Copper</strong>: Cu</li>
-        <li><strong>Zinc</strong>: Zn</li>
-        <li><strong>Silver</strong>: Ag</li>
-        <li><strong>Gold</strong>: Au</li>
-</div>
-<div style="text-align: center; margin-top: 20px;">
-    <img src="https://images.my.labster.com/v2/NOM/f7f84b4a-406b-4b18-a9a9-66c28b06c4f3/NOM_PeriodicTable_MetalsVsNonmetals_InBlocks.en.x1024.png" alt="Periodic Table with Families" style="max-width: 100%; height: auto;">
-</div>
-
-
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
-
-<hr>
-
-<!-- VI. Periodic Families -->
-<h2 id="periodic-families">VI. Periodic Families</h2>
-<button class="collapsible">A. Alkali Metals (Group 1)</button>
-<div class="content">
-    <ul>
-        <li><strong>Elements</strong>: Li, Na, K, Rb, Cs, Fr.</li>
-        <li><strong>Properties</strong>:
-            <ul>
-                <li>Highly reactive, especially with water.</li>
-                <li>One valence electron.</li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<!-- Continue with other families like Alkaline Earth Metals, Halogens, etc. -->
-
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
-
-<hr>
-
-<!-- VII. Metals vs Non-Metals -->
-<h2 id="metals-nonmetals">VII. Metals vs Non-Metals</h2>
-<button class="collapsible">A. Metals</button>
-<div class="content">
-    <ul>
-        <li><strong>Properties</strong>:
-            <ul>
-                <li>Good conductors of heat and electricity.</li>
-                <li>Malleable and ductile.</li>
-                <li>Lustrous appearance.</li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<button class="collapsible">B. Non-Metals</button>
-<div class="content">
-    <ul>
-        <li><strong>Properties</strong>:
-            <ul>
-                <li>Poor conductors.</li>
-                <li>Brittle when solid.</li>
-                <li>Dull appearance.</li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<button class="collapsible">C. Metalloids</button>
-<div class="content">
-    <ul>
-        <li><strong>Properties</strong>:
-            <ul>
-                <li>Properties intermediate between metals and non-metals.</li>
-                <li>Semiconductors.</li>
-            </ul>
-        </li>
-    </ul>
-</div>
-
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
-
-<hr>
-
-<!-- VIII. Laws of Definite Composition and Multiple Proportions -->
-<h2 id="laws">VIII. Laws of Composition</h2>
-<button class="collapsible">A. Law of Definite Composition</button>
-<div class="content">
-    <ul>
-        <li><strong>Definition</strong>: A chemical compound always contains the same proportion of elements by mass.</li>
-        <li><strong>Example</strong>: Water is always 11.19% hydrogen and 88.81% oxygen by mass.</li>
-    </ul>
-</div>
-
-<button class="collapsible">B. Law of Multiple Proportions</button>
-<div class="content">
-    <ul>
-        <li><strong>Definition</strong>: When two elements form more than one compound, the mass ratios are simple whole numbers.</li>
-        <li><strong>Example</strong>: CO and CO₂ have mass ratios of oxygen to carbon that are in a 1:2 ratio.</li>
-    </ul>
-</div>
-
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
-
-<hr>
-
-<!-- IX. Dalton's Atomic Model -->
-<h2 id="dalton-model">IX. Dalton's Atomic Model</h2>
-<div>
-    <ul>
-        <li><strong>Postulates</strong>:
+        <button class="collapsible">A. Pure Substances</button>
+        <div class="content">
             <ol>
-                <li>Matter consists of indivisible atoms.</li>
-                <li>Atoms of the same element are identical.</li>
-                <li>Compounds are combinations of different atoms.</li>
-                <li>Chemical reactions involve rearrangement of atoms.</li>
-                <li>Atoms are neither created nor destroyed.</li>
+                <li><strong>Elements</strong>
+                    <ul>
+                        <li>Simplest form of matter.</li>
+                        <li>Cannot be broken down by chemical means.</li>
+                        <li><strong>Examples</strong>: Hydrogen (H), Oxygen (O), Gold (Au).</li>
+                    </ul>
+                </li>
+                <li><strong>Compounds</strong>
+                    <ul>
+                        <li>Made of two or more elements chemically combined.</li>
+                        <li>Fixed proportions.</li>
+                        <li><strong>Examples</strong>: Water (H₂O), Carbon Dioxide (CO₂).</li>
+                    </ul>
+                </li>
             </ol>
-        </li>
-        <li><strong>Impact on Chemistry</strong>:
-            <ul>
-                <li>Provided a framework for understanding chemical reactions.</li>
-                <li>Explained conservation of mass.</li>
-            </ul>
-        </li>
-        <li><strong>Limitations</strong>:
-            <ul>
-                <li>Atoms are divisible into subatomic particles.</li>
-                <li>Existence of isotopes contradicts identical atoms postulate.</li>
-                <li>Modern atomic theory incorporates quantum mechanics.</li>
-            </ul>
-        </li>
-    </ul>
-</div>
+        </div>
 
-<p class="back-to-top"><a href="#top">Back to Top</a></p>
+        <button class="collapsible">B. Mixtures</button>
+        <div class="content">
+            <ol>
+                <li><strong>Homogeneous Mixtures (Solutions)</strong>
+                    <ul>
+                        <li>Uniform composition throughout.</li>
+                        <li><strong>Examples</strong>: Saltwater, air.</li>
+                    </ul>
+                </li>
+                <li><strong>Heterogeneous Mixtures</strong>
+                    <ul>
+                        <li>Non-uniform composition.</li>
+                        <li><strong>Examples</strong>: Salad, sand and water.</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
 
-<hr>
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
+
+        <hr>
+
+        <!-- IV. Theories of Heat -->
+        <h2 id="theories-of-heat">IV. Theories of Heat</h2>
+
+        <button class="collapsible">A. Caloric Theory</button>
+        <div class="content">
+            <ul>
+                <li><strong>Tenets</strong>:
+                    <ul>
+                        <li>Heat is a weightless fluid called caloric.</li>
+                        <li>Flows from hotter to colder bodies.</li>
+                    </ul>
+                </li>
+                <li><strong>Experimental Support</strong>:
+                    <ul>
+                        <li>Early observations of heat flow.</li>
+                    </ul>
+                </li>
+                <li><strong>Why It's Wrong</strong>:
+                    <ul>
+                        <li>Couldn't explain heat generation via friction.</li>
+                        <li>Disproved by experiments showing heat as energy transfer.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <button class="collapsible">B. Kinetic Theory of Heat</button>
+        <div class="content">
+            <ul>
+                <li><strong>Tenets</strong>:
+                    <ul>
+                        <li>Heat is the kinetic energy of particles.</li>
+                        <li>Temperature measures average kinetic energy.</li>
+                    </ul>
+                </li>
+                <li><strong>Experimental Support</strong>:
+                    <ul>
+                        <li>Explains gas laws and heat capacities.</li>
+                    </ul>
+                </li>
+                <li><strong>Advantages</strong>:
+                    <ul>
+                        <li>Accounts for molecular motion.</li>
+                        <li>Explains heat transfer mechanisms.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <button class="collapsible">C. Modern Thermodynamics</button>
+        <div class="content">
+            <ul>
+                <li><strong>Tenets</strong>:
+                    <ul>
+                        <li>Heat is energy transfer due to temperature difference.</li>
+                        <li>Governed by laws of thermodynamics.</li>
+                    </ul>
+                </li>
+                <li><strong>Experimental Support</strong>:
+                    <ul>
+                        <li>Broad applications in engines, refrigeration.</li>
+                    </ul>
+                </li>
+                <li><strong>Improvements</strong>:
+                    <ul>
+                        <li>Introduces concepts of entropy and enthalpy.</li>
+                        <li>More comprehensive understanding of energy systems.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
+
+        <hr>
+
+        <!-- V. Element Symbols -->
+        <h2 id="element-symbols">V. Element Symbols</h2>
+        <div>
+            <ul>
+                <li><strong>Hydrogen</strong>: H</li>
+                <li><strong>Carbon</strong>: C</li>
+                <li><strong>Nitrogen</strong>: N</li>
+                <li><strong>Oxygen</strong>: O</li>
+                <li><strong>Sodium</strong>: Na</li>
+                <li><strong>Magnesium</strong>: Mg</li>
+                <li><strong>Aluminum</strong>: Al</li>
+                <li><strong>Silicon</strong>: Si</li>
+                <li><strong>Sulfur</strong>: S</li>
+                <li><strong>Potassium</strong>: K</li>
+                <li><strong>Calcium</strong>: Ca</li>
+                <li><strong>Iron</strong>: Fe</li>
+                <li><strong>Copper</strong>: Cu</li>
+                <li><strong>Zinc</strong>: Zn</li>
+                <li><strong>Silver</strong>: Ag</li>
+                <li><strong>Gold</strong>: Au</li>
+            </ul>
+        </div>
+
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
+
+        <hr>
+
+        <!-- VI. Periodic Families -->
+        <h2 id="periodic-families">VI. Periodic Families</h2>
+
+        <button class="collapsible">A. Alkali Metals (Group 1)</button>
+        <div class="content">
+            <ul>
+                <li><strong>Elements</strong>: Li, Na, K, Rb, Cs, Fr.</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Highly reactive, especially with water.</li>
+                        <li>One valence electron.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <button class="collapsible">B. Alkaline Earth Metals (Group 2)</button>
+        <div class="content">
+            <ul>
+                <li><strong>Elements</strong>: Be, Mg, Ca, Sr, Ba, Ra.</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Reactive metals.</li>
+                        <li>Two valence electrons.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <button class="collapsible">C. Transition Metals (Groups 3-12)</button>
+        <div class="content">
+            <ul>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Good conductors of heat and electricity.</li>
+                        <li>High melting and boiling points.</li>
+                        <li>Variable oxidation states.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <button class="collapsible">D. Halogens (Group 17)</button>
+        <div class="content">
+            <ul>
+                <li><strong>Elements</strong>: F, Cl, Br, I, At, Ts.</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Highly reactive non-metals.</li>
+                        <li>Seven valence electrons.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <button class="collapsible">E. Noble Gases (Group 18)</button>
+        <div class="content">
+            <ul>
+                <li><strong>Elements</strong>: He, Ne, Ar, Kr, Xe, Rn, Og.</li>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Inert gases.</li>
+                        <li>Full valence shell.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
+
+        <hr>
+
+        <!-- VII. Metals vs Non-Metals -->
+        <h2 id="metals-nonmetals">VII. Metals vs Non-Metals</h2>
+
+        <button class="collapsible">A. Metals</button>
+        <div class="content">
+            <ul>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Good conductors of heat and electricity.</li>
+                        <li>Malleable and ductile.</li>
+                        <li>Lustrous appearance.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <button class="collapsible">B. Non-Metals</button>
+        <div class="content">
+            <ul>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Poor conductors.</li>
+                        <li>Brittle when solid.</li>
+                        <li>Dull appearance.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <button class="collapsible">C. Metalloids</button>
+        <div class="content">
+            <ul>
+                <li><strong>Properties</strong>:
+                    <ul>
+                        <li>Properties intermediate between metals and non-metals.</li>
+                        <li>Semiconductors.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
+
+        <hr>
+
+        <!-- VIII. Laws of Definite Composition and Multiple Proportions -->
+        <h2 id="laws">VIII. Laws of Composition</h2>
+
+        <button class="collapsible">A. Law of Definite Composition</button>
+        <div class="content">
+            <ul>
+                <li><strong>Definition</strong>: A chemical compound always contains the same proportion of elements by mass.</li>
+                <li><strong>Example</strong>: Water is always 11.19% hydrogen and 88.81% oxygen by mass.</li>
+            </ul>
+        </div>
+
+        <button class="collapsible">B. Law of Multiple Proportions</button>
+        <div class="content">
+            <ul>
+                <li><strong>Definition</strong>: When two elements form more than one compound, the mass ratios are simple whole numbers.</li>
+                <li><strong>Example</strong>: CO and CO₂ have mass ratios of oxygen to carbon that are in a 1:2 ratio.</li>
+            </ul>
+        </div>
+
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
+
+        <hr>
+
+        <!-- IX. Dalton's Atomic Model -->
+        <h2 id="dalton-model">IX. Dalton's Atomic Model</h2>
+        <div>
+            <ul>
+                <li><strong>Postulates</strong>:
+                    <ol>
+                        <li>Matter consists of indivisible atoms.</li>
+                        <li>Atoms of the same element are identical.</li>
+                        <li>Compounds are combinations of different atoms.</li>
+                        <li>Chemical reactions involve rearrangement of atoms.</li>
+                        <li>Atoms are neither created nor destroyed.</li>
+                    </ol>
+                </li>
+                <li><strong>Impact on Chemistry</strong>:
+                    <ul>
+                        <li>Provided a framework for understanding chemical reactions.</li>
+                        <li>Explained conservation of mass.</li>
+                    </ul>
+                </li>
+                <li><strong>Limitations</strong>:
+                    <ul>
+                        <li>Atoms are divisible into subatomic particles.</li>
+                        <li>Existence of isotopes contradicts identical atoms postulate.</li>
+                        <li>Modern atomic theory incorporates quantum mechanics.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <p class="back-to-top"><a href="#top">Back to Top</a></p>
+
+        <hr>
+
+        <!-- Practice Problems -->
 
 <h2 id="practice-problems">Practice Problems</h2>
 
@@ -746,11 +559,17 @@
 <h3>VIII. Laws of Definite Composition and Multiple Proportions</h3> <div class="question"> <p><strong>1.</strong> The Law of Definite Composition applies to:</p> <div> <div class="quiz-option" data-correct="true" data-explanation="Compounds have a definite composition by mass.">A) Compounds</div> <div class="quiz-option" data-correct="false" data-explanation="Mixtures have variable composition.">B) Mixtures</div> <div class="quiz-option" data-correct="false" data-explanation="Elements are pure substances but the law refers to compounds.">C) Elements</div> <div class="quiz-option" data-correct="false" data-explanation="Solutions are mixtures and have variable composition.">D) Solutions</div> </div> </div> <div class="question"> <p><strong>2.</strong> If two elements form more than one compound, their mass ratios are simple whole numbers. This is an example of the Law of:</p> <div> <div class="quiz-option" data-correct="false" data-explanation="The Law of Conservation of Mass states that mass is conserved in reactions.">A) Conservation of Mass</div> <div class="quiz-option" data-correct="false" data-explanation="The Law of Definite Composition refers to fixed composition in compounds.">B) Definite Composition</div> <div class="quiz-option" data-correct="true" data-explanation="The Law of Multiple Proportions describes this phenomenon.">C) Multiple Proportions</div> <div class="quiz-option" data-correct="false" data-explanation="Dalton's Law of Partial Pressures relates to gases.">D) Dalton's Law of Partial Pressures</div> </div> </div> <div class="question"> <p><strong>3.</strong> Which of the following best illustrates the Law of Multiple Proportions?</p> <div> <div class="quiz-option" data-correct="true" data-explanation="Carbon forms CO and CO₂, with oxygen mass ratios of 1:2.">A) Carbon forms CO and CO₂</div> <div class="quiz-option" data-correct="false" data-explanation="Water always has the same composition, illustrating the Law of Definite Composition.">B) Water is composed of H₂O</div> <div class="quiz-option" data-correct="false" data-explanation="Mass conservation relates to the Law of Conservation of Mass.">C) Mass is conserved in reactions</div> <div class="quiz-option" data-correct="false" data-explanation="Air is a mixture, not a compound with fixed ratios.">D) Air is composed of nitrogen and oxygen</div> </div> </div>
 <h3>IX. Dalton's Atomic Model</h3> <div class="question"> <p><strong>1.</strong> Which of the following is NOT a postulate of Dalton's Atomic Theory?</p> <div> <div class="quiz-option" data-correct="false" data-explanation="Dalton stated that atoms are indivisible.">A) Atoms are indivisible particles</div> <div class="quiz-option" data-correct="false" data-explanation="Atoms of the same element are identical in mass and properties.">B) Atoms of the same element are identical</div> <div class="quiz-option" data-correct="false" data-explanation="Atoms combine in simple whole-number ratios.">C) Atoms combine in simple whole-number ratios</div> <div class="quiz-option" data-correct="true" data-explanation="Dalton's theory did not include protons, neutrons, or electrons.">D) Atoms are made up of protons, neutrons, and electrons</div> </div> </div> <div class="question"> <p><strong>2.</strong> Dalton's Atomic Theory helped to explain the Law of Conservation of Mass by stating that:</p> <div> <div class="quiz-option" data-correct="true" data-explanation="Dalton proposed that atoms are rearranged during chemical reactions.">A) Atoms are rearranged during chemical reactions</div> <div class="quiz-option" data-correct="false" data-explanation="Atoms are neither created nor destroyed in reactions.">B) Atoms can be created and destroyed</div> <div class="quiz-option" data-correct="false" data-explanation="Mass is conserved, not converted into energy in chemical reactions.">C) Mass is converted into energy</div> <div class="quiz-option" data-correct="false" data-explanation="Atoms retain their identities in chemical reactions.">D) Atoms change their identities in reactions</div> </div> </div> <div class="question"> <p><strong>3.</strong> Which of the following is a limitation of Dalton's Atomic Theory?</p> <div> <div class="quiz-option" data-correct="false" data-explanation="Dalton correctly proposed that atoms combine in chemical reactions.">A) Atoms can combine in chemical reactions</div> <div class="quiz-option" data-correct="true" data-explanation="Atoms are divisible into subatomic particles, which Dalton did not know.">B) Atoms are indivisible and indestructible particles</div> <div class="quiz-option" data-correct="false" data-explanation="Dalton's theory did not address nuclear reactions.">C) Atoms can be converted into energy in nuclear reactions</div> <div class="quiz-option" data-correct="false" data-explanation="Dalton recognized that different elements have different masses.">D) Atoms of different elements have different masses</div> </div> </div>
 <!-- Popup for Quiz Feedback -->
-<div id="popup" class="popup">
-    <h2 id="popup-text"></h2>
-    <p id="popup-explanation"></p>
-    <button onclick="closePopup()">Close</button>
-</div>
+     <div id="popup" class="popup">
+            <h2 id="popup-text"></h2>
+            <p id="popup-explanation"></p>
+            <button onclick="closeQuizPopup()">Close</button>
+        </div>
+
+    </div>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
 
 </body>
 </html>
+
