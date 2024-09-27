@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Interactive Study Guide and Practice Problems</title>
+    <title>Enhanced Interactive Study Guide</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -46,25 +46,14 @@
         .question {
             margin-bottom: 20px;
         }
-        .answer {
-            display: none;
-            color: #145A32;
-            margin-top: 10px;
-        }
-        .show-answer {
-            color: #2874A6;
-            cursor: pointer;
-            text-decoration: underline;
-        }
         .quiz-option {
             cursor: pointer;
             margin-bottom: 5px;
+            padding: 5px;
+            border-radius: 5px;
         }
-        .correct {
-            color: green;
-        }
-        .incorrect {
-            color: red;
+        .quiz-option:hover {
+            background-color: #e0e0e0;
         }
         .back-to-top {
             display: block;
@@ -83,6 +72,7 @@
             padding: 10px;
             width: 100%;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 100;
         }
         nav a {
             margin-right: 15px;
@@ -95,6 +85,36 @@
         }
         .content-section {
             margin-top: 60px;
+        }
+        /* Popup styles */
+        .popup {
+            position: fixed;
+            display: none;
+            width: 300px;
+            background-color: #fff;
+            border: 2px solid #2E86C1;
+            padding: 15px;
+            z-index: 200;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        .popup.correct {
+            border-color: green;
+        }
+        .popup.incorrect {
+            border-color: red;
+        }
+        .popup button {
+            margin-top: 15px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        /* Disable scroll when popup is active */
+        body.popup-active {
+            overflow: hidden;
         }
     </style>
     <script>
@@ -116,28 +136,27 @@
             for (var i = 0; i < quizOptions.length; i++) {
                 quizOptions[i].addEventListener('click', function() {
                     var selected = this;
-                    var allOptions = this.parentElement.getElementsByClassName('quiz-option');
-                    for (var j = 0; j < allOptions.length; j++) {
-                        allOptions[j].style.pointerEvents = 'none';
-                        if (allOptions[j].dataset.correct === "true") {
-                            allOptions[j].classList.add('correct');
-                        } else {
-                            allOptions[j].classList.add('incorrect');
-                        }
-                    }
-                    var explanation = this.parentElement.getElementsByClassName('explanation')[0];
-                    explanation.style.display = 'block';
+                    var isCorrect = selected.dataset.correct === "true";
+                    showPopup(isCorrect, selected.dataset.explanation);
                 });
             }
         });
 
-        function toggleAnswer(id) {
-            var answer = document.getElementById(id);
-            if (answer.style.display === "none") {
-                answer.style.display = "block";
-            } else {
-                answer.style.display = "none";
-            }
+        function showPopup(isCorrect, explanation) {
+            var popup = document.getElementById('popup');
+            var popupText = document.getElementById('popup-text');
+            var popupExplanation = document.getElementById('popup-explanation');
+            popup.className = isCorrect ? 'popup correct' : 'popup incorrect';
+            popupText.textContent = isCorrect ? 'Correct!' : 'Incorrect.';
+            popupExplanation.textContent = explanation;
+            popup.style.display = 'block';
+            document.body.classList.add('popup-active');
+        }
+
+        function closePopup() {
+            var popup = document.getElementById('popup');
+            popup.style.display = 'none';
+            document.body.classList.remove('popup-active');
         }
     </script>
 </head>
@@ -156,7 +175,7 @@
     <a href="#practice-problems">Practice Problems</a>
 </nav>
 
-<h1 id="top">Interactive Study Guide</h1>
+<h1 id="top">Enhanced Interactive Study Guide</h1>
 
 <hr>
 
@@ -222,7 +241,7 @@
 
 <hr>
 
-<!-- Include other sections (II to IX) using the same collapsible format -->
+<!-- Continue with other sections -->
 
 <h2 id="practice-problems">Practice Problems</h2>
 
@@ -233,40 +252,45 @@
 <div class="question">
     <p><strong>1.</strong> Which state of matter has a definite volume but takes the shape of its container?</p>
     <div>
-        <div class="quiz-option" data-correct="false">A) Solid</div>
-        <div class="quiz-option" data-correct="true">B) Liquid</div>
-        <div class="quiz-option" data-correct="false">C) Gas</div>
-        <div class="quiz-option" data-correct="false">D) Plasma</div>
-    </div>
-    <div class="explanation" style="display:none;">
-        <strong>Explanation:</strong> Liquids have a definite volume but take the shape of their container.
+        <div class="quiz-option" data-correct="false" data-explanation="Solids have a definite shape and volume.">A) Solid</div>
+        <div class="quiz-option" data-correct="true" data-explanation="Liquids have a definite volume but take the shape of their container.">B) Liquid</div>
+        <div class="quiz-option" data-correct="false" data-explanation="Gases have neither definite shape nor volume.">C) Gas</div>
+        <div class="quiz-option" data-correct="false" data-explanation="Plasma behaves like gas but is ionized.">D) Plasma</div>
     </div>
 </div>
-
-<!-- Continue adding other practice problems in the same format -->
 
 <div class="question">
     <p><strong>2.</strong> In which state are particles far apart and move freely at high speeds?</p>
     <div>
-        <div class="quiz-option" data-correct="false">A) Solid</div>
-        <div class="quiz-option" data-correct="false">B) Liquid</div>
-        <div class="quiz-option" data-correct="true">C) Gas</div>
-        <div class="quiz-option" data-correct="false">D) Bose-Einstein Condensate</div>
-    </div>
-    <div class="explanation" style="display:none;">
-        <strong>Explanation:</strong> Gases have particles that are far apart and move freely.
+        <div class="quiz-option" data-correct="false" data-explanation="Particles in solids are tightly packed.">A) Solid</div>
+        <div class="quiz-option" data-correct="false" data-explanation="Particles in liquids are close but can slide past each other.">B) Liquid</div>
+        <div class="quiz-option" data-correct="true" data-explanation="Gases have particles that are far apart and move freely.">C) Gas</div>
+        <div class="quiz-option" data-correct="false" data-explanation="Bose-Einstein condensates occur at near absolute zero temperatures.">D) Bose-Einstein Condensate</div>
     </div>
 </div>
 
-<!-- Add the rest of the practice problems up to question 27 -->
+<div class="question">
+    <p><strong>3.</strong> Which state of matter is characterized by ionized particles and is affected by magnetic fields?</p>
+    <div>
+        <div class="quiz-option" data-correct="false" data-explanation="Solids have neutral particles in fixed positions.">A) Solid</div>
+        <div class="quiz-option" data-correct="false" data-explanation="Liquids have neutral particles that can flow.">B) Liquid</div>
+        <div class="quiz-option" data-correct="false" data-explanation="Gases have neutral particles that move freely.">C) Gas</div>
+        <div class="quiz-option" data-correct="true" data-explanation="Plasma consists of ionized particles and is influenced by magnetic fields.">D) Plasma</div>
+    </div>
+</div>
+
+<!-- Add more questions for each category -->
 
 <p class="back-to-top"><a href="#top">Back to Top</a></p>
 
 <hr>
 
-<!-- Add a section for the Answer Key if desired -->
-
-<!-- Include any additional scripts or closing tags -->
+<!-- Popup for Quiz Feedback -->
+<div id="popup" class="popup">
+    <h2 id="popup-text"></h2>
+    <p id="popup-explanation"></p>
+    <button onclick="closePopup()">Close</button>
+</div>
 
 </body>
 </html>
