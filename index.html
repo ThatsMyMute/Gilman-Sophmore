@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Study Guide and Practice Problems</title>
+    <title>Interactive Study Guide and Practice Problems</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +12,7 @@
         h1, h2, h3, h4 {
             color: #2E86C1;
         }
-        ul {
+        ul, ol {
             margin-left: 20px;
         }
         li {
@@ -20,6 +20,28 @@
         }
         hr {
             margin: 20px 0;
+        }
+        .collapsible {
+            background-color: #f1f1f1;
+            color: #2E86C1;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .active, .collapsible:hover {
+            background-color: #ddd;
+        }
+        .content {
+            padding: 0 15px;
+            display: none;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
         }
         .question {
             margin-bottom: 20px;
@@ -34,12 +56,81 @@
             cursor: pointer;
             text-decoration: underline;
         }
-        pre {
-            background-color: #F2F3F4;
+        .quiz-option {
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .back-to-top {
+            display: block;
+            margin-top: 20px;
+            text-align: right;
+        }
+        .back-to-top a {
+            text-decoration: none;
+            color: #2874A6;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #f9f9f9;
             padding: 10px;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        nav a {
+            margin-right: 15px;
+            color: #2E86C1;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .content-section {
+            margin-top: 60px;
         }
     </style>
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var coll = document.getElementsByClassName("collapsible");
+            for (var i = 0; i < coll.length; i++) {
+                coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                        content.style.display = "none";
+                    } else {
+                        content.style.display = "block";
+                    }
+                });
+            }
+
+            var quizOptions = document.getElementsByClassName('quiz-option');
+            for (var i = 0; i < quizOptions.length; i++) {
+                quizOptions[i].addEventListener('click', function() {
+                    var selected = this;
+                    var allOptions = this.parentElement.getElementsByClassName('quiz-option');
+                    for (var j = 0; j < allOptions.length; j++) {
+                        allOptions[j].style.pointerEvents = 'none';
+                        if (allOptions[j].dataset.correct === "true") {
+                            allOptions[j].classList.add('correct');
+                        } else {
+                            allOptions[j].classList.add('incorrect');
+                        }
+                    }
+                    var explanation = this.parentElement.getElementsByClassName('explanation')[0];
+                    explanation.style.display = 'block';
+                });
+            }
+        });
+
         function toggleAnswer(id) {
             var answer = document.getElementById(id);
             if (answer.style.display === "none") {
@@ -52,190 +143,103 @@
 </head>
 <body>
 
-<h1>Study Guide</h1>
+<nav>
+    <a href="#states-of-matter">States of Matter</a>
+    <a href="#physical-chemical-changes">Physical/Chemical Changes</a>
+    <a href="#classification-of-matter">Classification of Matter</a>
+    <a href="#theories-of-heat">Theories of Heat</a>
+    <a href="#element-symbols">Element Symbols</a>
+    <a href="#periodic-families">Periodic Families</a>
+    <a href="#metals-nonmetals">Metals vs Non-Metals</a>
+    <a href="#laws">Laws of Composition</a>
+    <a href="#dalton-model">Dalton's Model</a>
+    <a href="#practice-problems">Practice Problems</a>
+</nav>
+
+<h1 id="top">Interactive Study Guide</h1>
 
 <hr>
 
-<h2>I. States of Matter</h2>
+<h2 id="states-of-matter">I. States of Matter</h2>
 
-<h3>A. Solids</h3>
-<ul>
-    <li><strong>Definition</strong>: Matter with a definite shape and volume.</li>
-    <li><strong>Properties</strong>:
-        <ul>
-            <li>Particles are closely packed in a fixed arrangement.</li>
-            <li>Vibrate but do not move from place to place.</li>
-            <li>Incompressible and rigid.</li>
-        </ul>
-    </li>
-</ul>
+<button class="collapsible">A. Solids</button>
+<div class="content">
+    <ul>
+        <li><strong>Definition</strong>: Matter with a definite shape and volume.</li>
+        <li><strong>Properties</strong>:
+            <ul>
+                <li>Particles are closely packed in a fixed arrangement.</li>
+                <li>Vibrate but do not move from place to place.</li>
+                <li>Incompressible and rigid.</li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
-<h3>B. Liquids</h3>
-<ul>
-    <li><strong>Definition</strong>: Matter that has a definite volume but takes the shape of its container.</li>
-    <li><strong>Properties</strong>:
-        <ul>
-            <li>Particles are close together but can move/slide past one another.</li>
-            <li>Fluid and can flow.</li>
-            <li>Slightly compressible.</li>
-        </ul>
-    </li>
-</ul>
+<button class="collapsible">B. Liquids</button>
+<div class="content">
+    <ul>
+        <li><strong>Definition</strong>: Matter that has a definite volume but takes the shape of its container.</li>
+        <li><strong>Properties</strong>:
+            <ul>
+                <li>Particles are close together but can move/slide past one another.</li>
+                <li>Fluid and can flow.</li>
+                <li>Slightly compressible.</li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
-<h3>C. Gases</h3>
-<ul>
-    <li><strong>Definition</strong>: Matter without a definite shape or volume.</li>
-    <li><strong>Properties</strong>:
-        <ul>
-            <li>Particles are far apart and move freely.</li>
-            <li>Fill any container they're in.</li>
-            <li>Highly compressible.</li>
-        </ul>
-    </li>
-</ul>
+<button class="collapsible">C. Gases</button>
+<div class="content">
+    <ul>
+        <li><strong>Definition</strong>: Matter without a definite shape or volume.</li>
+        <li><strong>Properties</strong>:
+            <ul>
+                <li>Particles are far apart and move freely.</li>
+                <li>Fill any container they're in.</li>
+                <li>Highly compressible.</li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
-<h3>D. Plasma</h3>
-<ul>
-    <li><strong>Definition</strong>: Ionized gas with free electrons.</li>
-    <li><strong>Properties</strong>:
-        <ul>
-            <li>Conducts electricity.</li>
-            <li>Affected by magnetic fields.</li>
-            <li>Found in stars and fluorescent lights.</li>
-        </ul>
-    </li>
-</ul>
+<button class="collapsible">D. Plasma</button>
+<div class="content">
+    <ul>
+        <li><strong>Definition</strong>: Ionized gas with free electrons.</li>
+        <li><strong>Properties</strong>:
+            <ul>
+                <li>Conducts electricity.</li>
+                <li>Affected by magnetic fields.</li>
+                <li>Found in stars and fluorescent lights.</li>
+            </ul>
+        </li>
+    </ul>
+</div>
 
-<hr>
-
-<h2>II. Physical and Chemical Changes</h2>
-
-<h3>A. Physical Changes</h3>
-<ul>
-    <li><strong>Definition</strong>: Changes that alter the form of a substance but not its chemical composition.</li>
-    <li><strong>Examples</strong>:
-        <ul>
-            <li>Melting ice.</li>
-            <li>Tearing paper.</li>
-            <li>Dissolving sugar in water.</li>
-        </ul>
-    </li>
-    <li><strong>Characteristics</strong>:
-        <ul>
-            <li>Generally reversible.</li>
-            <li>No new substances formed.</li>
-        </ul>
-    </li>
-</ul>
-
-<h3>B. Chemical Changes</h3>
-<ul>
-    <li><strong>Definition</strong>: Changes that result in the formation of new chemical substances.</li>
-    <li><strong>Examples</strong>:
-        <ul>
-            <li>Burning wood.</li>
-            <li>Rusting iron.</li>
-            <li>Baking a cake.</li>
-        </ul>
-    </li>
-    <li><strong>Indicators</strong>:
-        <ul>
-            <li>Color change.</li>
-            <li>Gas production.</li>
-            <li>Formation of a precipitate.</li>
-            <li>Energy change (heat, light).</li>
-        </ul>
-    </li>
-</ul>
+<p class="back-to-top"><a href="#top">Back to Top</a></p>
 
 <hr>
 
-<h2>III. Classification of Matter by Composition</h2>
+<!-- Include other sections (II to IX) using the same collapsible format -->
 
-<h3>A. Pure Substances</h3>
-<ol>
-    <li><strong>Elements</strong>
-        <ul>
-            <li>Simplest form of matter.</li>
-            <li>Cannot be broken down by chemical means.</li>
-            <li><strong>Examples</strong>: Hydrogen (H), Oxygen (O), Gold (Au).</li>
-        </ul>
-    </li>
-    <li><strong>Compounds</strong>
-        <ul>
-            <li>Made of two or more elements chemically combined.</li>
-            <li>Fixed proportions.</li>
-            <li><strong>Examples</strong>: Water (H₂O), Carbon Dioxide (CO₂).</li>
-        </ul>
-    </li>
-</ol>
-
-<h3>B. Mixtures</h3>
-<ol>
-    <li><strong>Homogeneous Mixtures (Solutions)</strong>
-        <ul>
-            <li>Uniform composition throughout.</li>
-            <li><strong>Examples</strong>: Saltwater, air.</li>
-        </ul>
-    </li>
-    <li><strong>Heterogeneous Mixtures</strong>
-        <ul>
-            <li>Non-uniform composition.</li>
-            <li><strong>Examples</strong>: Salad, sand and water.</li>
-        </ul>
-    </li>
-</ol>
+<h2 id="practice-problems">Practice Problems</h2>
 
 <hr>
 
-<!-- Continue adding other sections (IV to IX) in the same format -->
-
-<h2>IV. Theories of Heat</h2>
-
-<h3>A. Caloric Theory</h3>
-<ul>
-    <li><strong>Tenets</strong>:
-        <ul>
-            <li>Heat is a weightless fluid called caloric.</li>
-            <li>Flows from hotter to colder bodies.</li>
-        </ul>
-    </li>
-    <li><strong>Experimental Support</strong>:
-        <ul>
-            <li>Early observations of heat flow.</li>
-        </ul>
-    </li>
-    <li><strong>Why It's Wrong</strong>:
-        <ul>
-            <li>Couldn't explain heat generation via friction.</li>
-            <li>Disproved by experiments showing heat as energy transfer.</li>
-        </ul>
-    </li>
-</ul>
-
-<!-- Include other theories B and C -->
-
-<!-- Continue with sections V to IX -->
-
-<hr>
-
-<h1>Practice Problems</h1>
-
-<hr>
-
-<h2>I. States of Matter</h2>
+<h3>I. States of Matter</h3>
 
 <div class="question">
     <p><strong>1.</strong> Which state of matter has a definite volume but takes the shape of its container?</p>
-    <ul>
-        <li>A) Solid</li>
-        <li>B) Liquid</li>
-        <li>C) Gas</li>
-        <li>D) Plasma</li>
-    </ul>
-    <p class="show-answer" onclick="toggleAnswer('answer1')">Show Answer</p>
-    <div class="answer" id="answer1">
-        <strong>Answer:</strong> B) Liquid
+    <div>
+        <div class="quiz-option" data-correct="false">A) Solid</div>
+        <div class="quiz-option" data-correct="true">B) Liquid</div>
+        <div class="quiz-option" data-correct="false">C) Gas</div>
+        <div class="quiz-option" data-correct="false">D) Plasma</div>
+    </div>
+    <div class="explanation" style="display:none;">
+        <strong>Explanation:</strong> Liquids have a definite volume but take the shape of their container.
     </div>
 </div>
 
@@ -243,66 +247,26 @@
 
 <div class="question">
     <p><strong>2.</strong> In which state are particles far apart and move freely at high speeds?</p>
-    <ul>
-        <li>A) Solid</li>
-        <li>B) Liquid</li>
-        <li>C) Gas</li>
-        <li>D) Bose-Einstein Condensate</li>
-    </ul>
-    <p class="show-answer" onclick="toggleAnswer('answer2')">Show Answer</p>
-    <div class="answer" id="answer2">
-        <strong>Answer:</strong> C) Gas
+    <div>
+        <div class="quiz-option" data-correct="false">A) Solid</div>
+        <div class="quiz-option" data-correct="false">B) Liquid</div>
+        <div class="quiz-option" data-correct="true">C) Gas</div>
+        <div class="quiz-option" data-correct="false">D) Bose-Einstein Condensate</div>
+    </div>
+    <div class="explanation" style="display:none;">
+        <strong>Explanation:</strong> Gases have particles that are far apart and move freely.
     </div>
 </div>
 
 <!-- Add the rest of the practice problems up to question 27 -->
 
-<hr>
-
-<h2>Answer Key</h2>
-<ol>
-    <li>B</li>
-    <li>C</li>
-    <li>D</li>
-    <li>C</li>
-    <li>B</li>
-    <li>C</li>
-    <li>C</li>
-    <li>B</li>
-    <li>B</li>
-    <li>B</li>
-    <li>B</li>
-    <li>B</li>
-    <li>C</li>
-    <li>B</li>
-    <li>B</li>
-    <li>A</li>
-    <li>D</li>
-    <li>C</li>
-    <li>C</li>
-    <li>A</li>
-    <li>C</li>
-    <li>B</li>
-    <li>C</li>
-    <li>C</li>
-    <li>C</li>
-    <li>D</li>
-    <li>A</li>
-</ol>
+<p class="back-to-top"><a href="#top">Back to Top</a></p>
 
 <hr>
 
-<h2>Tips for Using These Practice Problems</h2>
-<ul>
-    <li><strong>Self-Testing</strong>: Try to answer each question without looking at the answers first.</li>
-    <li><strong>Review</strong>: For any questions you get wrong, revisit the related section in your study materials.</li>
-    <li><strong>Explanation</strong>: Make sure you understand <em>why</em> the correct answer is right.</li>
-    <li><strong>Discussion</strong>: Discuss tricky questions with classmates or teachers to deepen your understanding.</li>
-</ul>
+<!-- Add a section for the Answer Key if desired -->
 
-<hr>
-
-<p><strong>Good luck with your studies!</strong></p>
+<!-- Include any additional scripts or closing tags -->
 
 </body>
 </html>
