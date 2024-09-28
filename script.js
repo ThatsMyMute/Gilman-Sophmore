@@ -268,7 +268,7 @@ var questionBank = [
             { text: "C) Atoms can be converted into energy in nuclear reactions", isCorrect: false, explanation: "Dalton's theory did not address nuclear reactions." },
             { text: "D) Atoms of different elements have different masses", isCorrect: false, explanation: "Dalton recognized that different elements have different masses." }
         ]
-    }
+    },
     // Additional questions to add to the question bank
 
 // I. States of Matter
