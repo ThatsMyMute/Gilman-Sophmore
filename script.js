@@ -269,6 +269,206 @@ var questionBank = [
             { text: "D) Atoms of different elements have different masses", isCorrect: false, explanation: "Dalton recognized that different elements have different masses." }
         ]
     }
+    // Additional questions to add to the question bank
+
+// I. States of Matter
+{
+    section: "I. States of Matter",
+    question: "Which state of matter consists of ionized particles and is affected by magnetic fields?",
+    options: [
+        { text: "A) Solid", isCorrect: false, explanation: "Solids do not consist of ionized particles." },
+        { text: "B) Liquid", isCorrect: false, explanation: "Liquids are not ionized and are not affected by magnetic fields." },
+        { text: "C) Gas", isCorrect: false, explanation: "Gases are not ionized under normal conditions." },
+        { text: "D) Plasma", isCorrect: true, explanation: "Plasma consists of ionized particles and is affected by magnetic fields." }
+    ]
+},
+{
+    section: "I. States of Matter",
+    question: "Which state of matter has particles with the highest kinetic energy?",
+    options: [
+        { text: "A) Solid", isCorrect: false, explanation: "Particles in solids have the least kinetic energy." },
+        { text: "B) Liquid", isCorrect: false, explanation: "Particles in liquids have more kinetic energy than in solids but less than in gases." },
+        { text: "C) Gas", isCorrect: true, explanation: "Particles in gases have the highest kinetic energy among the common states of matter." },
+        { text: "D) Bose-Einstein Condensate", isCorrect: false, explanation: "Particles in Bose-Einstein condensates have extremely low kinetic energy." }
+    ]
+},
+
+// II. Physical and Chemical Changes
+{
+    section: "II. Physical and Chemical Changes",
+    question: "Which process is a physical change involving a phase transition?",
+    options: [
+        { text: "A) Combustion of gasoline", isCorrect: false, explanation: "Combustion is a chemical change." },
+        { text: "B) Freezing of water", isCorrect: true, explanation: "Freezing is a physical change involving a phase transition from liquid to solid." },
+        { text: "C) Tarnishing of silver", isCorrect: false, explanation: "Tarnishing is a chemical change due to oxidation." },
+        { text: "D) Digestion of food", isCorrect: false, explanation: "Digestion is a chemical change involving enzymatic reactions." }
+    ]
+},
+{
+    section: "II. Physical and Chemical Changes",
+    question: "All of the following are signs of a chemical change EXCEPT:",
+    options: [
+        { text: "A) Formation of a precipitate", isCorrect: false, explanation: "Formation of a precipitate indicates a chemical change." },
+        { text: "B) Production of gas bubbles", isCorrect: false, explanation: "Gas production is a sign of a chemical change." },
+        { text: "C) Change in color", isCorrect: false, explanation: "Color change often indicates a chemical change." },
+        { text: "D) Melting of a solid", isCorrect: true, explanation: "Melting is a physical change, not a chemical one." }
+    ]
+},
+
+// III. Classification of Matter by Composition
+{
+    section: "III. Classification of Matter by Composition",
+    question: "Brass is an example of a:",
+    options: [
+        { text: "A) Compound", isCorrect: false, explanation: "Brass is not a compound with fixed proportions." },
+        { text: "B) Homogeneous mixture", isCorrect: true, explanation: "Brass is a homogeneous mixture (alloy) of copper and zinc." },
+        { text: "C) Heterogeneous mixture", isCorrect: false, explanation: "Brass has a uniform composition throughout." },
+        { text: "D) Pure substance", isCorrect: false, explanation: "Brass is not a pure substance; it's a mixture." }
+    ]
+},
+{
+    section: "III. Classification of Matter by Composition",
+    question: "Which of the following substances can be separated into its components by physical means?",
+    options: [
+        { text: "A) Water (H₂O)", isCorrect: false, explanation: "Water is a compound and requires chemical means to separate." },
+        { text: "B) Carbon dioxide (CO₂)", isCorrect: false, explanation: "Carbon dioxide is a compound." },
+        { text: "C) Saltwater", isCorrect: true, explanation: "Saltwater is a mixture that can be separated by physical means like evaporation." },
+        { text: "D) Sodium chloride (NaCl)", isCorrect: false, explanation: "Sodium chloride is a compound." }
+    ]
+},
+
+// IV. Theories of Heat
+{
+    section: "IV. Theories of Heat",
+    question: "Which form of heat transfer does not require a medium?",
+    options: [
+        { text: "A) Conduction", isCorrect: false, explanation: "Conduction requires a medium to transfer heat through direct contact." },
+        { text: "B) Convection", isCorrect: false, explanation: "Convection requires a fluid medium to transfer heat." },
+        { text: "C) Radiation", isCorrect: true, explanation: "Radiation can transfer heat through a vacuum without a medium." },
+        { text: "D) Evaporation", isCorrect: false, explanation: "Evaporation involves a phase change in a medium." }
+    ]
+},
+{
+    section: "IV. Theories of Heat",
+    question: "According to kinetic theory, temperature is a measure of:",
+    options: [
+        { text: "A) The total potential energy of particles", isCorrect: false, explanation: "Temperature measures kinetic, not potential energy." },
+        { text: "B) The average kinetic energy of particles", isCorrect: true, explanation: "Temperature reflects the average kinetic energy of particles in a substance." },
+        { text: "C) The total mass of particles", isCorrect: false, explanation: "Mass is not related to temperature in this context." },
+        { text: "D) The number of particles", isCorrect: false, explanation: "Number of particles does not directly measure temperature." }
+    ]
+},
+
+// V. Element Symbols
+{
+    section: "V. Element Symbols",
+    question: "What is the chemical symbol for mercury?",
+    options: [
+        { text: "A) Me", isCorrect: false, explanation: "There is no element with the symbol 'Me'." },
+        { text: "B) Mg", isCorrect: false, explanation: "Mg is the symbol for magnesium." },
+        { text: "C) Hg", isCorrect: true, explanation: "Hg is the symbol for mercury, from the Latin 'hydrargyrum'." },
+        { text: "D) Mn", isCorrect: false, explanation: "Mn is the symbol for manganese." }
+    ]
+},
+{
+    section: "V. Element Symbols",
+    question: "The element tin has which chemical symbol?",
+    options: [
+        { text: "A) Tn", isCorrect: false, explanation: "There is no element with the symbol 'Tn'." },
+        { text: "B) Ti", isCorrect: false, explanation: "Ti is the symbol for titanium." },
+        { text: "C) Sn", isCorrect: true, explanation: "Sn is the symbol for tin, from the Latin 'stannum'." },
+        { text: "D) Sb", isCorrect: false, explanation: "Sb is the symbol for antimony." }
+    ]
+},
+
+// VI. Periodic Families
+{
+    section: "VI. Periodic Families",
+    question: "Which family of elements is known for being inert due to having a full valence shell?",
+    options: [
+        { text: "A) Alkali Metals", isCorrect: false, explanation: "Alkali metals are highly reactive with one valence electron." },
+        { text: "B) Alkaline Earth Metals", isCorrect: false, explanation: "Alkaline earth metals are reactive and have two valence electrons." },
+        { text: "C) Halogens", isCorrect: false, explanation: "Halogens are highly reactive non-metals with seven valence electrons." },
+        { text: "D) Noble Gases", isCorrect: true, explanation: "Noble gases have a full valence shell and are inert." }
+    ]
+},
+{
+    section: "VI. Periodic Families",
+    question: "Elements in the same group of the periodic table have the same number of:",
+    options: [
+        { text: "A) Protons", isCorrect: false, explanation: "Protons define the atomic number and differ between elements." },
+        { text: "B) Neutrons", isCorrect: false, explanation: "Neutrons can vary even among atoms of the same element." },
+        { text: "C) Valence electrons", isCorrect: true, explanation: "Elements in the same group have the same number of valence electrons." },
+        { text: "D) Electron shells", isCorrect: false, explanation: "Elements in the same period have the same number of electron shells." }
+    ]
+},
+
+// VII. Metals vs Non-Metals
+{
+    section: "VII. Metals vs Non-Metals",
+    question: "Which of the following elements is a metalloid?",
+    options: [
+        { text: "A) Silicon", isCorrect: true, explanation: "Silicon is a metalloid with properties of both metals and non-metals." },
+        { text: "B) Oxygen", isCorrect: false, explanation: "Oxygen is a non-metal." },
+        { text: "C) Copper", isCorrect: false, explanation: "Copper is a metal." },
+        { text: "D) Neon", isCorrect: false, explanation: "Neon is a noble gas." }
+    ]
+},
+{
+    section: "VII. Metals vs Non-Metals",
+    question: "Non-metals tend to form which type of ions?",
+    options: [
+        { text: "A) Cations by losing electrons", isCorrect: false, explanation: "Metals form cations by losing electrons." },
+        { text: "B) Anions by gaining electrons", isCorrect: true, explanation: "Non-metals form anions by gaining electrons." },
+        { text: "C) Cations by gaining electrons", isCorrect: false, explanation: "Cations are formed by losing electrons." },
+        { text: "D) Neutral atoms by sharing electrons equally", isCorrect: false, explanation: "While non-metals can share electrons, ion formation involves gaining electrons." }
+    ]
+},
+
+// VIII. Laws of Definite Composition and Multiple Proportions
+{
+    section: "VIII. Laws of Composition",
+    question: "Which law states that energy cannot be created or destroyed in a chemical reaction?",
+    options: [
+        { text: "A) Law of Conservation of Mass", isCorrect: false, explanation: "This law pertains to mass, not energy." },
+        { text: "B) Law of Conservation of Energy", isCorrect: true, explanation: "Energy remains constant in an isolated system." },
+        { text: "C) Law of Definite Composition", isCorrect: false, explanation: "This law relates to the composition of compounds." },
+        { text: "D) Law of Multiple Proportions", isCorrect: false, explanation: "This law involves the ratios of masses in compounds." }
+    ]
+},
+{
+    section: "VIII. Laws of Composition",
+    question: "The observation that sulfur can form both SO₂ and SO₃ illustrates the:",
+    options: [
+        { text: "A) Law of Conservation of Mass", isCorrect: false, explanation: "This law does not explain different compounds." },
+        { text: "B) Law of Definite Composition", isCorrect: false, explanation: "Each compound has a definite composition, but this doesn't explain multiple compounds." },
+        { text: "C) Law of Multiple Proportions", isCorrect: true, explanation: "It shows that elements can combine in different ratios to form different compounds." },
+        { text: "D) Avogadro's Law", isCorrect: false, explanation: "Avogadro's Law relates to gas volumes and moles." }
+    ]
+},
+
+// IX. Dalton's Atomic Model
+{
+    section: "IX. Dalton's Atomic Model",
+    question: "Dalton's Atomic Theory helped lay the foundation for which important chemical concept?",
+    options: [
+        { text: "A) The periodic table", isCorrect: false, explanation: "The periodic table was developed later, based on elemental properties." },
+        { text: "B) The concept of chemical stoichiometry", isCorrect: true, explanation: "Dalton's theory provided a basis for understanding stoichiometry in reactions." },
+        { text: "C) Quantum mechanics", isCorrect: false, explanation: "Quantum mechanics emerged much later to explain atomic behavior." },
+        { text: "D) Nuclear fusion", isCorrect: false, explanation: "Nuclear fusion involves atomic nuclei, not addressed by Dalton." }
+    ]
+},
+{
+    section: "IX. Dalton's Atomic Model",
+    question: "Which postulate of Dalton's Atomic Theory was later disproven by the discovery of isotopes?",
+    options: [
+        { text: "A) Atoms are indivisible and indestructible", isCorrect: false, explanation: "This was disproven by the discovery of subatomic particles." },
+        { text: "B) Atoms of the same element are identical in mass and properties", isCorrect: true, explanation: "Isotopes have different masses but are the same element." },
+        { text: "C) Atoms combine in simple whole-number ratios", isCorrect: false, explanation: "This postulate remains valid for chemical compounds." },
+        { text: "D) Atoms are rearranged in chemical reactions", isCorrect: false, explanation: "This postulate is still considered accurate." }
+    ]
+}
+
 ];
 
 // Function to generate practice problems
