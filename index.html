@@ -75,6 +75,7 @@
                 <div class="label">Seconds</div>
             </div>
         </div>
+        <p id="message" style="display: none;">The countdown is over!</p>
     </div>
 
     <script>
@@ -85,6 +86,14 @@
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
+
+            // Check if countdown is over
+            if (distance <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").style.display = "none";
+                document.getElementById("message").style.display = "block";
+                return;
+            }
 
             // Time calculations for days, hours, minutes, and seconds
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -97,16 +106,6 @@
             document.getElementById("hours").innerText = hours;
             document.getElementById("minutes").innerText = minutes;
             document.getElementById("seconds").innerText = seconds;
-
-            // Debugging console logs to check the values
-            console.log(`Target Date: ${targetDate}, Now: ${now}, Distance: ${distance}`);
-            console.log(`Days: ${days}, Hours: ${hours}, Minutes: ${minutes}, Seconds: ${seconds}`);
-
-            // If countdown is over
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById("countdown").innerHTML = "<p>The countdown is over!</p>";
-            }
         }
 
         // Update countdown every second
