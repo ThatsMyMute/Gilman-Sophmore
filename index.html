@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown to April 28th</title>
+    <style>
+        /* Background and font settings */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            color: #333;
+            text-align: center;
+        }
+
+        /* Countdown Container */
+        .countdown-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        /* Heading */
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4A90E2;
+        }
+
+        /* Countdown display styling */
+        .countdown {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.5rem;
+        }
+
+        .countdown div {
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        /* Time Label Styling */
+        .label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="countdown-container">
+        <h1>Countdown to April 28th</h1>
+        <div class="countdown" id="countdown">
+            <div>
+                <span id="days">0</span>
+                <div class="label">Days</div>
+            </div>
+            <div>
+                <span id="hours">0</span>
+                <div class="label">Hours</div>
+            </div>
+            <div>
+                <span id="minutes">0</span>
+                <div class="label">Minutes</div>
+            </div>
+            <div>
+                <span id="seconds">0</span>
+                <div class="label">Seconds</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown target date
+        const targetDate = new Date("April 28, 2024 00:00:00").getTime();
+
+        // Countdown function
+        const countdownInterval = setInterval(function () {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Time calculations for days, hours, minutes, and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display countdown
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+
+            // If countdown is over
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "<p>The countdown is over!</p>";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
