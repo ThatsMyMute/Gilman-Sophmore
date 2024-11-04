@@ -82,7 +82,7 @@
         const targetDate = new Date("April 28, 2024 00:00:00").getTime();
 
         // Countdown function
-        const countdownInterval = setInterval(function () {
+        function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
 
@@ -103,7 +103,11 @@
                 clearInterval(countdownInterval);
                 document.getElementById("countdown").innerHTML = "<p>The countdown is over!</p>";
             }
-        }, 1000);
+        }
+
+        // Update countdown every second
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown(); // initial call to avoid delay
     </script>
 </body>
 </html>
