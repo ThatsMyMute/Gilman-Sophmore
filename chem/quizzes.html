@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Chemistry Quiz</h1>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gases.html">Gases</a></li>
+                <li><a href="stoichiometry.html">Stoichiometry</a></li>
+                <li><a href="heat.html">Heat</a></li>
+                <li><a href="history.html">History</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="quiz-setup">
+            <h2>Select Quiz Options</h2>
+            <label for="num-questions">Number of Questions:</label>
+            <select id="num-questions">
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+            </select>
+            <button class="btn-42" onclick="startQuiz()"><span>Start Quiz</span></button>
+        </section>
+
+        <section id="quiz-section" class="hidden">
+            <div id="quiz-container"></div>
+            <button class="btn-42" onclick="submitQuiz()"><span>Submit Quiz</span></button>
+        </section>
+
+        <section id="results-section" class="hidden">
+            <h2>Results</h2>
+            <p id="results-text"></p>
+            <button class="btn-42" onclick="restartQuiz()"><span>Take Another Quiz</span></button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Chemistry Study Guide | All Rights Reserved</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
