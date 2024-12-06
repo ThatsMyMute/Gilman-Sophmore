@@ -4,7 +4,157 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemistry Study Guide</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #4a90e2, #9b59b6);
+            color: #f8f8f8;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .nav-links li {
+            margin: 0 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        main section {
+            margin: 2rem 0;
+        }
+
+        main h2 {
+            font-size: 2rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        main p {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin: 1rem 0;
+        }
+
+        /* Cards Section */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem; /* Increased spacing between cards */
+            margin: 2rem 0;
+            padding: 0 2rem; /* Add padding to ensure cards don't touch the edges */
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            color: #f8f8f8;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.05); /* Adds the "pop up" effect */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Enhance the shadow on hover */
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+
+        .card p {
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+
+        .quiz-button {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: #ffffff;
+            color: #4a90e2;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-button:hover {
+            background: #4a90e2;
+            color: #ffffff;
+        }
+
+        /* Quiz Button */
+        .btn-42 {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 1rem 2rem;
+            background: #ffffff;
+            color: #4a90e2;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .btn-42:hover {
+            background: #4a90e2;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem 0;
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -15,14 +165,14 @@
                 <li><a href="stoichiometry.html">Stoichiometry</a></li>
                 <li><a href="heat.html">Heat</a></li>
                 <li><a href="history.html">History</a></li>
-                <li><a href="quiz.html">Take a Quiz</a></li>
+                <li><a href="quizzes.html">Take a Quiz</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section>
-            <h2>Welcome to Gilmans 10th Grade Chem Study Site Made By JD</h2>
+            <h2>Welcome to Gilman's 10th Grade Chem Study Site Made By JD</h2>
             <p>
                 This website is designed to help you review for your Chemistry midterm. 
                 Explore key topics, test your knowledge with interactive quizzes, 
@@ -33,7 +183,7 @@
         <section class="cards">
             <div class="card">
                 <h3>Solids, Liquids, Gases</h3>
-                <p>Learn about Solid, Liquid, Gases, laws, kinetic molecular theory, and real-world applications.</p>
+                <p>Learn about solid, liquid, gases laws, kinetic molecular theory, and real-world applications.</p>
                 <a href="gases.html" class="quiz-button">Learn More</a>
             </div>
             <div class="card">
